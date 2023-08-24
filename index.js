@@ -15,21 +15,35 @@ const serpmeKahvalti = {isim: "Serpme Kahvaltı", fiyat: 16, kategori:"Kahvaltı
 */
 
 
-function MenuElemaniOlustur(/*Kodlar buraya*/){
-	/*Kodlar buraya*/
+function MenuElemaniOlustur(name, price, category){
+	const item =
+	{
+		isim: name,
+		fiyat: price,
+		kategori: category
+	}
+
+	return item;
 }
+console.log("G1a:");
+console.log(MenuElemaniOlustur('Cheeseburger', 8, 'Burgerler'));
 
 
 
 /*  Görev 1b (otomatik test yok): 
-	Fonksiyonu çağırın!
-	Aşağıdakileri uygulayarak MenuElemaniOlustur fonksiyonunuzu test edin:
-	1. MenuElemaniOlustur ile nesne oluşturmak için parametreleri girerek fonksiyonu çağırın (menu elemanları)
-	2. Kendi seçtiğiniz isim,fiyat ve kategorileri kullanarak en az 3 menü elemanı oluşturun 
-	3. Tüm döndürülen sonuçları konsolda gözlemleyin (console.log)
-	
-	Örnek: MenuElemaniOlustur("Karışık Pizza",5,"Pizzalar") şunu döndürür: {isim:"Karışık Pizza",fiyat:5,kategori:"Pizzalar"}
+Fonksiyonu çağırın!
+Aşağıdakileri uygulayarak MenuElemaniOlustur fonksiyonunuzu test edin:
+1. MenuElemaniOlustur ile nesne oluşturmak için parametreleri girerek fonksiyonu çağırın (menu elemanları)
+2. Kendi seçtiğiniz isim,fiyat ve kategorileri kullanarak en az 3 menü elemanı oluşturun 
+3. Tüm döndürülen sonuçları konsolda gözlemleyin (console.log)
+
+Örnek: MenuElemaniOlustur("Karışık Pizza",5,"Pizzalar") şunu döndürür: {isim:"Karışık Pizza",fiyat:5,kategori:"Pizzalar"}
 */
+
+console.log("G1b:");
+console.log(MenuElemaniOlustur("Karışık Pizza", 8, "Pizzalar"));
+console.log(MenuElemaniOlustur("Sandviç", 5, "Sandviçler"));
+console.log(MenuElemaniOlustur("Kahve", 2, "İçecekler"));
 
 
 
@@ -49,10 +63,26 @@ function MenuElemaniOlustur(/*Kodlar buraya*/){
 const burger = {
 	isim: "Burger", 
 	fiyat: 18, 
-	kategori: "Öğle Yemeği", 
+	kategori: "Öğle Yemeği",
+	indirim: function (string) {
+		let price = this.fiyat;
+		if("öğretmen" === string || "öğrenci" == string)
+		{
+			price *= 0.75;
+		}
+		else if("diğer" === string)
+		{
+			price *= 0.90;
+		}
 
+		return price;
+	}
 }
-
+console.log("G2")
+console.log(burger.indirim("öğretmen"));
+console.log(burger.indirim("öğrenci"));
+console.log(burger.indirim("diğer"));
+console.log(burger.indirim("non_valid_str"));
 
 
 ///////////////Değerlendirmeler (MVP)///////////////////
@@ -72,6 +102,14 @@ const degerlendirmeler = [
 	1. Sadece Ahmet'in geribildirimini konsolda görüntüleyin - fonksiyona gerek yok
 */
 
+console.log("G3:");
+const idxAhmet = degerlendirmeler.findIndex(object => {
+	return object.isim === "Ahmet";
+  });
+
+console.log(degerlendirmeler[idxAhmet].geribildirim);
+
+
 
 
 /*  Görev 4 (ototest yok):  
@@ -79,6 +117,15 @@ const degerlendirmeler = [
 	1. Bu geribildirimi Reyna'nın değerlendirmesine ekleyin - "bu mekan bir harika dostum, yine de garsonun gülümsememesinden puan kırdım"
 	2. degerlendirmeler dizisini konsolda görüntüleyerek çalışmanızı kontrol edin
 */
+console.log("G4:");
+const idxReyna = degerlendirmeler.findIndex(object => {
+	return object.isim === "Reyna";
+  });
+
+  degerlendirmeler[idxReyna].geribildirim = "bu mekan bir harika dostum, yine de garsonun gülümsememesinden puan kırdım";
+  console.log(degerlendirmeler);
+
+
 
 
 
@@ -94,11 +141,20 @@ const degerlendirmeler = [
 */
 
 
-function DegerlendirmeEkle(/*Kodlar buraya */){
-	/*Kodlar buraya */
-	
+function DegerlendirmeEkle(arrEval, name, score, feedback){
+	const objEval = {
+		isim: name,
+		puan: score,
+		geribildirim: feedback
+	}
+
+	arrEval.push(objEval);
+
+	return arrEval;	
 }
 
+console.log("G5:");
+console.log(DegerlendirmeEkle(degerlendirmeler, "Hurşut", 2, "Kötü yemekler!"));
 
 
 /*  Görev 6: 
@@ -112,11 +168,13 @@ function DegerlendirmeEkle(/*Kodlar buraya */){
 */
 
 
-function AnahtardanDegerlendirmeAl(/*Kodlar buraya*/) {
-	/*Kodlar buraya*/
+function AnahtardanDegerlendirmeAl(arrEval, idx) {
+
+	return `${arrEval[idx].isim} isimli kişi ${arrEval[idx].puan} puan verdi ve şunları yazdı: ${arrEval[idx].geribildirim}`;
 
 }
-
+console.log("G6:");
+console.log(AnahtardanDegerlendirmeAl(degerlendirmeler, 0));
 
 
 /*  Görev 7:  
@@ -132,9 +190,12 @@ function AnahtardanDegerlendirmeAl(/*Kodlar buraya*/) {
 */
 
 
-function SonDegerlendirmeyiAl(/*Kodlar buraya*/) {
-	/*Kodlar buraya*/
-} 
+function SonDegerlendirmeyiAl(arrEval) {
+
+	return `${arrEval[arrEval.length - 1].isim} isimli kişi ${arrEval[arrEval.length - 1].puan} puan verdi ve şunları yazdı: ${arrEval[arrEval.length - 1].geribildirim}`;
+}
+console.log("G7:");
+console.log(SonDegerlendirmeyiAl(degerlendirmeler));
 
 
 
@@ -154,10 +215,13 @@ function SonDegerlendirmeyiAl(/*Kodlar buraya*/) {
 	]
 */
 
-function PuanaGoreDegerlendirmeAl(/* Kodlar buraya */) {
-    /* Kodlar buraya */
+function PuanaGoreDegerlendirmeAl(arrEval, scoreMin, scoreMax) {
+	return arrEval.filter(function(x) {
+		return x.puan >= scoreMin && x.puan <= scoreMax;
+	  });
 }
-
+console.log("GB1:");
+console.log(PuanaGoreDegerlendirmeAl(degerlendirmeler, 0, 3));
 
 /*  BONUS 2:    
 	UzunDegerlendirmeleriAl fonksiyonuna aşağıdakileri uygulayın:
@@ -166,10 +230,14 @@ function PuanaGoreDegerlendirmeAl(/* Kodlar buraya */) {
 	
 */
 
-function UzunDegerlendirmeleriAl(/* Kodlar buraya */) {
-    /* Kodlar buraya */
+function UzunDegerlendirmeleriAl(arrEval) {
+    return arrEval.filter(function(x) {
+		return x.geribildirim.split(" ").length > 15;
+	  });
 }
 
+console.log("GB2:");
+console.log(UzunDegerlendirmeleriAl(degerlendirmeler));
 
 /*  BONUS 3:  
 	Bu ek görevde degerlendirmeler dizisi kullanılmayacak!  Bu görevde kendi nesnenizi yaratmanız gerekmektedir.
@@ -189,10 +257,22 @@ function UzunDegerlendirmeleriAl(/* Kodlar buraya */) {
 */
 
 
-function arabaYapici(/* Kodlar buraya */) {
-    /* Kodlar buraya */
-    
+function arabaYapici(kmVal) {
+	const car = {
+		kilometreSayaci: kmVal,
+		surus: function (km) {
+			this.kilometreSayaci += km;
+			return this.kilometreSayaci;
+		}
+	}
+
+	return car;
 }
+
+console.log("GB3:");
+const araba = arabaYapici(10);
+console.log(araba.kilometreSayaci);
+console.log(araba.surus(100));
 
 
 /*  Buradan aşağıdaki kodları değiştirmeyin lütfen */
